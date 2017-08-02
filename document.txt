@@ -1,0 +1,57 @@
+CICMS Documentation
+
+Place the upzipped files in the required folder and edit the config/config.php file for base_url and other needed changes got to /admin/loginform and enter admin as username and password to login.
+
+Creating a Page
+
+1. Click (Pages -> New Page).
+2. Create controller
+
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class {{Controller Name}} extends CI_Controller {
+    var $thiscontroller,$thisfunction,$pagecontents,$themefoldername;
+    public function __construct(){
+        parent::__construct();
+        $this -> load -> model("Pages_model");
+        $this -> thiscontroller = $this->uri->segment(1);
+        $this -> thisfunction = $this->uri->segment(2);
+        $this -> themefoldername1 = $this -> config -> item("themefoldername1");
+    }
+    public function index()
+    {
+        $this -> pagecontents = $this -> Pages_model -> showpagecontents('4651'); // Page id taken from page /adminpage/pageslist
+        $bodydata = array(
+            'statictitle'    => STATICTITLE,
+            'title'            => '{{Page Title}}',
+            'pagecontent'    => $this -> pagecontents
+        );
+        $this -> load -> view("themes/".$this -> themefoldername1."/aboutuscontent",$bodydata);
+    }
+}
+
+ 
+
+3. This page will become accessible through /{{Controller Name}}
+
+Adding third party package
+
+1. Put the files in the folder assetsmodules.
+
+Creating Image Album
+
+1. Create album name (adminimages/albumlist)
+2. Add Images in the album (adminimages/albumlist -> List / Add / Edit Album Images List)
+3. Use jsimgslider_helper.php to add a slider (jsImgSlider is added in the package)
+
+
+Adding Users in User -> Userslist
+
+Adding Simple Forms
+
+1. Go to Forms -> Add New Form
+2. Select Textbox or Textarea , Label Name, Class Names(Optional), Css styles (Optional) Add to your form.
+3. Enter name for your form (eg. Contact Us Form)
+4. Click Save Form
